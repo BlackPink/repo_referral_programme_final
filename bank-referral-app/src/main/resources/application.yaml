@@ -1,0 +1,27 @@
+server:
+  port: 8081
+
+spring:
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:file:~/data/db_customer;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE
+    username: admin
+    password: admin
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+  application:
+    name: BANK_REFERRAL_SERVICE
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      default-zone: ${EUREKA_SERVER_ADDRESS:http://localhost:8761/eureka}

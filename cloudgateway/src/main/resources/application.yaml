@@ -1,0 +1,36 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: BANK_REFERRAL_SERVICE
+          uri: lb://BANK_REFERRAL_SERVICE
+          predicates:
+            - Path=/bank/users/**
+        - id: CUSTOMER_SERVICE
+          uri: lb://CUSTOMER_SERVICE
+          predicates:
+            - Path=/customers/**
+  config:
+    import: optional:configserver:instead
+
+okta:
+  oauth2:
+  issuer: https://dev-15585796.okta.com/oauth2/default
+  audience: api://default
+  client-id: 00a6cgklvwIS2SoFZ5d7
+  client-secret: L_VPQB5XQX5QAhnxaDqA0IhWG-TImnVpaHW7ER33
+  scopes: openid, profile, email, offline_access
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: ${EUREKA_SERVER_ADDRESS:http://localhost:8761/eureka}
